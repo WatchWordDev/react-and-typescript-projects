@@ -7,15 +7,22 @@ import { CharacterInformation } from './CharacterInformation';
 
 const Application = () => {
   const [character, setCharacter] = useState<CharacterType | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchCharacter().then((c) => {
-      setCharacter(c);
-    });
+    setTimeout(() => {
+      fetchCharacter().then((c) => {
+        setCharacter(c);
+        setLoading(false);
+      });
+    }, 1000);
   }, []);
 
   return (
-    <main>{character && <CharacterInformation character={character} />}</main>
+    <main>
+      {loading && <Loading />}
+      {character && <CharacterInformation character={character} />}
+    </main>
   );
 };
 
